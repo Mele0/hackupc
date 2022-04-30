@@ -3,7 +3,9 @@ var router = express.Router();
 const money_result = require('../models/money')
 
 router.get('/', function(req, res){
-   res = get_money_by_id(req.query) 
+   let user = req.query.user
+   res = get_money_by_id(user)
+
 });
 router.post('/', function(req, res){
    res.send('POST route on things.');
