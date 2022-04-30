@@ -21,14 +21,25 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err){
   console.log("Connected!");  
-  var sql = "CREATE TABLE money (name VARCHAR(255), value FLOAT(52))";
-  connection.query(sql, function (err, result) {
+  /*var sqlmoney = "CREATE TABLE money (id VARCHAR(255), balance FLOAT(10))";
+  connection.query(sqlmoney, function (err, result) {
       if (err) throw err;
   });
   console.log("table created!"); 
+  var sqlexpenses = "CREATE TABLE expenses (id VARCHAR(255), input FLOAT(10), time DATETIME(2))";
+  connection.query(sqlexpenses, function (err, result) {
+      if (err) throw err;
+  });*/
 
-  var sql = "INSERT INTO money (name) VALUES ('hola')";
-  connection.query(sql, function (err, result) {
+  console.log("table created!");
+  var sqlmoney = "INSERT INTO money (id, balance) VALUES ('49271168Q',3890)";
+  connection.query(sqlmoney, function (err, result) {
+      if (err) throw err;
+  });
+
+  var sqlexpenses = "INSERT INTO expenses (id, input, time) VALUES ('49271168Q',-1000, '2018-09-08 17:51:04.777')";
+
+  connection.query(sqlexpenses, function (err, result) {
       if (err) throw err;
   });
   console.log("value created!");  
