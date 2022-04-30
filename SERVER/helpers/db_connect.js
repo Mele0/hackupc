@@ -14,5 +14,26 @@ function db_connection(){
     return connection
 }
 
+function db_query(databaseQuery, connection) {
+    return new Promise(data => {
+        connection.query(databaseQuery, function (error, result) { 
+            if (error) {
+                console.log(error);
+                throw error;
+            }
+            try {
+                console.log(result);
+  
+                data(result);
+  
+            } catch (error) {
+                data({});
+                throw error;
+            }
+  
+        });
+    });
+  
+}
 
 module.exports = db_connection;
