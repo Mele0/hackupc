@@ -20,11 +20,11 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err){
   console.log("Connected!");  
-  /*var sql = "CREATE TABLE money (name VARCHAR(255))";
+  var sql = "CREATE TABLE money (name VARCHAR(255), value FLOAT(52))";
   connection.query(sql, function (err, result) {
       if (err) throw err;
   });
-  console.log("table created!");  */
+  console.log("table created!"); 
 
   var sql = "INSERT INTO money (name) VALUES ('hola')";
   connection.query(sql, function (err, result) {
