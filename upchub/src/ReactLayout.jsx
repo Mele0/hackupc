@@ -1,22 +1,30 @@
 import React, { useState } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import Popup from "reactjs-popup";
+import Grid from "@mui/material/Grid";
+
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-
+import "reactjs-popup/dist/index.css";
 import "./App.css";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 const ReactGridLayout = () => {
 	const [layouts, setLayouts] = useState(null);
-	const [widgetArray, setWidgetArray] = useState([
-		{ i: "widget1", x: 0, y: 0, w: 2, h: 2 },
-		{ i: "widget2", x: 2, y: 2, w: 2, h: 2 },
-		{ i: "widget3", x: 4, y: 4, w: 2, h: 2 },
+	const [availableWidgets, setAvailableWidgets] = useState([
+		{ title: "Gym Time", h: 2 },
+		{ title: "Bar Time", h: 2 },
+		{ title: "Study Time", h: 2 },
+		{ title: "Bar expenses", h: 2 },
+		{ title: "money2", h: 2 },
+		{ title: "money3", h: 2 },
 	]);
+	const [usedWidgets, setUsedWidgets] = useState([]);
 
 	const handleModify = (layouts, layout) => {
-		const tempArray = widgetArray;
+		const tempArray = usedWidgets;
 		setLayouts(layout);
 		layouts?.map((position) => {
 			tempArray[Number(position.i)].x = position.x;
@@ -24,27 +32,94 @@ const ReactGridLayout = () => {
 			tempArray[Number(position.i)].width = position.w;
 			tempArray[Number(position.i)].height = position.h;
 		});
-		setWidgetArray(tempArray);
+		setUsedWidgets(tempArray);
 	};
 
-	const handleAdd = () => {
-		setWidgetArray([
-			...widgetArray,
-			{ i: "widget" + (widgetArray.length + 1), x: 0, y: 0, w: 2, h: 2 },
+	const handleAdd = (widgetToBeAdded) => {
+		const tempArray = availableWidgets.slice();
+		const index = tempArray.indexOf(
+			tempArray.find((widget) => widget.title === widgetToBeAdded.title)
+		);
+		tempArray.splice(index, 1);
+		setAvailableWidgets(tempArray);
+		setUsedWidgets([
+			...usedWidgets,
+			{ title: widgetToBeAdded.title, x: 0, y: 0, w: 2, h: 2 },
 		]);
 	};
 
-	const handleDelete = (key) => {
-		const tempArray = widgetArray.slice();
-		const index = tempArray.indexOf(tempArray.find((data) => data.i === key));
+	const handleDelete = (widgetToBeDeleted) => {
+		const tempArray = usedWidgets.slice();
+		const index = tempArray.indexOf(
+			tempArray.find((widget) => widget.title === widgetToBeDeleted.title)
+		);
 		tempArray.splice(index, 1);
-		setWidgetArray(tempArray);
+		setUsedWidgets(tempArray);
+		setAvailableWidgets([...availableWidgets, { widgetToBeDeleted }]);
 	};
 
 	return (
 		<div>
-			<button onClick={() => handleAdd()}>Add Widget</button>
-
+			<Popup
+				contentStyle={{ borderRadius: 20, width: 600 }}
+				trigger={
+					<button className="buttonAdd">
+						<AddRoundedIcon />
+						<div className="buttonAdd"> Add Widget </div>
+					</button>
+				}
+				modal
+				nested
+			>
+				{(close) => (
+					<div className="modal">
+						<div className="header"> Available Widgets </div>
+						<div className="content">
+							<Grid
+								container
+								spacing={{ xs: 2, md: 3 }}
+								columns={{ xs: 4, sm: 8, md: 12 }}
+							>
+								{availableWidgets.map((widget, index) => (
+									<Grid
+										item
+										xs={2}
+										sm={4}
+										md={4}
+										key={index}
+										onClick={() => handleAdd(widget)}
+									>
+										<div className="item">{widget.title}</div>
+									</Grid>
+								))}
+							</Grid>
+						</div>
+						<div className="actions">
+							<Popup
+								trigger={<button className="button"> Add Widget </button>}
+								position="top center"
+								nested
+							>
+								<span>
+									Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+									Beatae magni omnis delectus nemo, maxime molestiae dolorem
+									numquam mollitia, voluptate ea, accusamus excepturi deleniti
+									ratione sapiente! Laudantium, aperiam doloribus. Odit, aut.
+								</span>
+							</Popup>
+							<button
+								className="button"
+								onClick={() => {
+									console.log("modal closed ");
+									close();
+								}}
+							>
+								Cancel
+							</button>
+						</div>
+					</div>
+				)}
+			</Popup>
 			<ResponsiveReactGridLayout
 				onLayoutChange={handleModify}
 				verticalCompact={true}
@@ -61,7 +136,7 @@ const ReactGridLayout = () => {
 					xxs: [20, 20],
 				}}
 			>
-				{widgetArray?.map((widget, index) => {
+				{usedWidgets?.map((widget, index) => {
 					return (
 						<div
 							className="reactGridItem"
@@ -82,11 +157,11 @@ const ReactGridLayout = () => {
 						>
 							<button
 								className="deleteButton"
-								onClick={() => handleDelete(widget.i)}
+								onClick={() => handleDelete(widget)}
 							>
 								x
 							</button>
-							<div>{widget.i}</div>
+							<div>{widget.title}</div>
 						</div>
 					);
 				})}

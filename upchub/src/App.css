@@ -12,6 +12,7 @@
 	align-items: center;
 	justify-content: center;
 	transition: all 200ms ease;
+	border-radius: 50px;
 	transition-property: left, top;
 	background: rgba(0, 132, 255, 0.473);
 	font-family: Arial, Helvetica, sans-serif;
@@ -19,10 +20,73 @@
 }
 .deleteButton {
 	position: absolute;
-	top: 0%;
-	left: 92%;
+	top: 5%;
+	left: 90%;
 	background: transparent;
 	border: none;
 	font-size: 18px;
 	cursor: pointer;
+}
+.buttonAdd {
+	font-size: 14px;
+	padding: 10px;
+	border-color: "#fff";
+	border-radius: 25px;
+	background: "red";
+	border: none;
+}
+.item {
+	font-size: 14px;
+	margin-top: 20px;
+	padding: 10px;
+	font-weight: bold;
+	text-align: center;
+	vertical-align: middle;
+}
+.button {
+	font-size: 14px;
+	padding: 10px;
+	margin-left: 20px;
+	border: none;
+	border-bottom: 2px solid #1a1919;
+	margin-right: 20px;
+	background: transparent;
+	color: #1a1919;
+}
+.modal {
+	font-size: 12px;
+}
+.modal > .header {
+	width: 100%;
+	border-bottom: 2px solid #1a1919;
+	color: #1a1919;
+	font-weight: bold;
+	font-size: 20px;
+	text-align: center;
+	padding: 5px;
+}
+.modal > .content {
+	border-radius: 200px;
+	width: 100%;
+	color: #1a1919;
+	padding: 10px 5px;
+}
+.modal > .actions {
+	width: 100%;
+	padding: 10px 5px;
+	margin: auto;
+	text-align: center;
+}
+.modal > .close {
+	cursor: pointer;
+	position: absolute;
+	display: block;
+	padding: 2px 5px;
+	line-height: 20px;
+	right: -10px;
+	top: -10px;
+	font-size: 24px;
+	background: #ffffff;
+	border-radius: 18px;
+	border: 1px solid #cfcece;
 }
