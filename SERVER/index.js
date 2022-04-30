@@ -4,7 +4,6 @@ require('dotenv').config();
 const port = process.env.PORT
 const host = process.env.HOST
 const user = process.env.USER
-
 const password = process.env.PASSWORD
 
 const mysql = require('mysql2')
@@ -15,27 +14,24 @@ var connection = mysql.createConnection({
   host     : host,
   user     : user,
   password : password,
+  database : "mydb"
 });
 
 
 connection.connect(function(err){
-  connection.query("CREATE DATABASE mydb", function (err, result) {
-    if (err) throw err;
-    console.log("hola")
-  });
-  var sql = "USE mydb";
-  connection.query(sql, function (err, result) {
-      if (err) throw err;
-    });
+  console.log("Connected!");  
   var sql = "CREATE TABLE money (name VARCHAR(255))";
   connection.query(sql, function (err, result) {
       if (err) throw err;
   });
-  var sql = "INSERT INTO money (hola)";
+  console.log("table created!");  
+
+  var sql = "INSERT INTO money (name) VALUES ('hola')";
   connection.query(sql, function (err, result) {
       if (err) throw err;
   });
-  
+  console.log("value created!");  
+
 });
 function get_info(callback){
       
