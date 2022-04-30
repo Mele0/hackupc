@@ -1,10 +1,11 @@
 import ReactGridLayout from "./ReactLayout";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import { CssBaseline, ThemeProvider, createMuiTheme } from "@material-ui/core";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -39,6 +40,7 @@ function App() {
 	const classes = useStyles();
 	const [open, setOpen] = useState(true);
 	const [darkMode, setDarkMode] = useState(true);
+	//const [data, setData] = useState(null);
 
 	const handleDrawerToggle = () => {
 		setOpen(!open);
@@ -58,6 +60,31 @@ function App() {
 	const toggleDarkMode = () => {
 		setDarkMode(!darkMode);
 	};
+
+
+	useEffect(() =>{
+		// this.callBackendAPI()
+		//   .then(res => this.setState({ data: res.express }))
+		//   .catch(err => console.log(err));
+		console.log("h");
+
+		axios.get("/money?user=49271168Q").then((response) => {
+				console.log(response);
+			}).catch(function(err){
+				console.log(err);
+			});
+	});
+
+	// const callBackendAPI = async () => {
+	// 	const response = await fetch('/money?user=49271168Q');
+	// 	const body = await response.json();
+	// 	if (response.status !== 200) {
+	// 	  throw Error(body.message) 
+	// 	}
+	// 	console.log(body)
+	// 	return body;
+	// };
+
 	return (
 		<ThemeProvider theme={theme}>
 			<div className={classes.root}>
