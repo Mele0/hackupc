@@ -17,7 +17,7 @@ app.use(express.json());
 var connection = con.db_connection();
 connection.connect(function(err){
   console.log("Connected!");
-  td.create_test_data(false);
+  td.create_test_data(true);
 });
 
 app.use('/money', money)

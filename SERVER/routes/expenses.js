@@ -12,6 +12,12 @@ router.get('/', async function(req, res){
 
 });
 router.post('/', async function(req, res){
+   let user = req.query.user;
+   let input = req.query.input;
+   let time = req.query.time;
+   result = await money_result.set_expenses_by_id(user,input,time);
+   var res_string = JSON.stringify(result);
+   res.end(res_string)
    
 });
 

@@ -20,6 +20,14 @@ async function get_expenses_by_id(user){
 
 }
 
+async function set_expenses_by_id(user,input,time){
+    con = money_result.db_connection()  
+    var  sql = "INSERT INTO expenses (id, input, time) VALUES ("+mysql.escape(user)+","+mysql.escape(input)+","+mysql.escape(time)+")";
+    change_balance(user,input);
+    result = await money_result.db_query(sql, con)
+    return result
+}
+
 async function change_balance(user, input){
     con = money_result.db_connection()  
     previous_balance = await get_money_by_id(user)
@@ -30,4 +38,4 @@ async function change_balance(user, input){
     result = await money_result.db_query(sql, con)
     return result
 }
-module.exports = {get_money_by_id,change_balance,get_expenses_by_id};
+module.exports = {get_money_by_id,change_balance,get_expenses_by_id,set_expenses_by_id};
