@@ -13,4 +13,9 @@ async function get_money_by_id(user){
 
 }
 
+async function change_balance(id, input){
+    con = money_result.db_connection()  
+    balance = get_money_by_id(id).balance+input
+    var sql = "INSERT INTO money (id, balance) VALUES ?"
+}
 module.exports = {get_money_by_id};
