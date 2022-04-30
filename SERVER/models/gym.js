@@ -16,16 +16,21 @@ async function get_hours_by_id(user){
 async function update_hours(user, date){
     con = db_connect.db_connection()
     previous_hours = await get_hours_by_id(user)
-    var  sql = "SELECT entrance, end FROM gym WHERE id = " + mysql.escape(user) + "AND day = " + mysql.escape('2020-07-02')
+    console.log(previous_hours)
+    var  sql = "SELECT entrance, end FROM gym WHERE id = " + mysql.escape(user) + "AND day = " + mysql.escape('2022-04-01')
     var adding_hours = await db_connect.db_query(sql, con)
-    sql = "SELECT SUBTIME("+ mysql.escape(adding_hours[0].end) +", "+ mysql.escape(adding_hours[0].entrance) + ") AS Result"
+    console.log(adding_hours)
+    sql = "SELECT SUBTIME("+ mysql.escape(adding_hours[0].end) +", "+ mysql.escape(adding_hours[0].entrance) + ") AS result"
     new_hours = await db_connect.db_query(sql, con)
-    sql = "SELECT HOUR(" + mysql.escape(new_hours) + ") AS Result"
+    console.log(new_hours)
+    sql = "SELECT HOUR(" + mysql.escape(new_hours[0].result) + ") AS result"
     hour_selected = await db_connect.db_query(sql, con)
-    sql = "SELECT ADDTIME("+ mysql.escape(hour_selected) +", "+ mysql.escape(previous_hours) + ") AS Result"
-    result = await db_connect.db_query(sql, con)
+    console.log(hour_selected)
+    result = (hour_selected[0].result + previous_hours[0].hours)
+    console.log(result)
+    var sql = "UPDATE gym_hours SET hours = " + mysql.escape(result) + " WHERE id = " + mysql.escape(user)
+    await db_connect.db_query(sql, con)
 
-    return result
+    return toString(result)
 }
-
 module.exports = {get_hours_by_id, update_hours};
