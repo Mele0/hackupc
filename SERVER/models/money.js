@@ -13,9 +13,11 @@ async function get_money_by_id(user){
 
 }
 
-async function change_balance(id, input){
+async function change_balance(user, input){
     con = money_result.db_connection()  
-    balance = get_money_by_id(id).balance+input
-    var sql = "INSERT INTO money (id, balance) VALUES ?"
+    balance = get_money_by_id(user).balance+input
+    var sql = "INSERT INTO money (id, balance) VALUES (user, balance)"
+    result = await money_result.db_query(sql, con)
+    console.log(result)
 }
-module.exports = {get_money_by_id};
+module.exports = {get_money_by_id,change_balance};
