@@ -22,7 +22,7 @@ function db_query(databaseQuery, connection) {
                 throw error;
             }
             try {
-                console.log(result);
+                
   
                 data(result);
   
