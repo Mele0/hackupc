@@ -68,15 +68,11 @@ const Header = () => {
 		<>
 			<AppBar position="fixed" className={classes.appbar}>
 				<Toolbar>
-					<IconButton
-						color="inherit"
-						aria-label="open drawer"
-						edge="start"
-						onClick={menuIconClick}
+					<Typography
+						variant="h5"
+						style={{ fontWeight: "bold", alignSelf: "center" }}
+						noWrap
 					>
-						<MenuIcon />
-					</IconButton>
-					<Typography variant="h5" style={{ fontWeight: "bold" }} noWrap>
 						UPCHub
 					</Typography>
 					<img src={logo} height="50" width="50" style={imgStyle} />
@@ -97,7 +93,7 @@ const Header = () => {
 			<div id="header">
 				{/* collapsed props to change menu size using menucollapse state */}
 				<ProSidebar collapsed={menuCollapse}>
-					<SidebarContent>
+					<SidebarContent onMouseEnter={menuIconClick}>
 						<Menu className="margin" iconShape="square">
 							<MenuItem icon={<DashboardIcon />}>
 								<Link to="/" />
