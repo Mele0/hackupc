@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function Header({
+export default function Headerr({
 	handleDrawerToggle,
 	toggleDarkMode,
 	darkMode,
@@ -46,15 +46,6 @@ export default function Header({
 					UPCHub
 				</Typography>
 				<div className={classes.spacer} />
-				<IconButton
-					color="inherit"
-					aria-label="open drawer"
-					onClick={toggleDarkMode}
-					edge="start"
-					className={classes.rightIcons}
-				>
-					{darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
-				</IconButton>
 				<Typography variant="h6" noWrap>
 					Ricard Guixaró
 				</Typography>

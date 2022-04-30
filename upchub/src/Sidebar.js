@@ -40,75 +40,24 @@ export default function ({ open, handleDrawerClose }) {
 	const classes = useStyles();
 
 	return (
-		<Router>
-			<Drawer
-				className={classes.drawer}
-				variant="persistent"
-				anchor="left"
-				open={open}
-				classes={{
-					paper: classes.drawerPaper,
-				}}
-			>
-				<div className={classes.drawerHeader}>
-					<IconButton onClick={handleDrawerClose}>
-						<ChevronLeftIcon />
-					</IconButton>
-				</div>
-				<Divider />
-				<div className="">
-					<List>
-						<ListItem button>
-							<ListItemIcon>
-								<DashboardIcon />
-							</ListItemIcon>
-							<Link to="/">
-								<ListItemText primary="Dashboard" font-family="Sunny" />
-							</Link>
-						</ListItem>
-						<ListItem button>
-							<ListItemIcon>
-								<TimerIcon />
-							</ListItemIcon>
-							<Link to="/time">
-								<ListItemText primary="Time" font-family="Sunny" />
-							</Link>
-						</ListItem>
-
-						<ListItem button>
-							<ListItemIcon>
-								<EventIcon />
-							</ListItemIcon>
-							<ListItemText primary="Events" />
-						</ListItem>
-						<ListItem button>
-							<ListItemIcon>
-								<PaidIcon />
-							</ListItemIcon>
-							<ListItemText primary="Money" />
-						</ListItem>
-						<ListItem button>
-							<ListItemIcon>
-								<ExploreIcon />
-							</ListItemIcon>
-							<ListItemText primary="Explore" />
-						</ListItem>
-					</List>
-					<Divider />
-
-					<List>
-						<ListItem button>
-							<ListItemIcon>
-								<CancelRoundedIcon style={{ transform: "rotate(45deg)" }} />
-							</ListItemIcon>
-							<ListItemText primary="a" />
-						</ListItem>
-					</List>
-				</div>
-			</Drawer>
-			<Routes>
-				<Route exact path="/time" element={<Time />}></Route>
-			</Routes>
-		</Router>
+		<Drawer
+			className={classes.drawer}
+			variant="persistent"
+			anchor="left"
+			open={open}
+			classes={{
+				paper: classes.drawerPaper,
+			}}
+		>
+			<div className={classes.drawerHeader}>
+				<IconButton onClick={handleDrawerClose}>
+					<ChevronLeftIcon />
+				</IconButton>
+			</div>
+			<div className={classes.drawerHeader}>
+				<Link to="money">Click to view our money page</Link>
+				<Link to="time">Click to view our time page</Link>
+			</div>
+		</Drawer>
 	);
 }
