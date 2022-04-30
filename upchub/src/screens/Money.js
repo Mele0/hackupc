@@ -6,8 +6,7 @@ export class Money extends Component {
 	render() {
 		return (
 			<div>
-				<div>Hola</div>
-				<ReactGridLayout key={2} id={2} />
+				<ReactGridLayout key={3} id={3} />
 			</div>
 		);
 	}

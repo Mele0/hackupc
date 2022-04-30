@@ -6,7 +6,7 @@ export class Time extends Component {
 	render() {
 		return (
 			<div>
-				<ReactGridLayout key={1} id={1} />
+				<ReactGridLayout key={2} id={2} />
 			</div>
 		);
 	}

@@ -14,7 +14,7 @@ const data = [{ name: "Page A", uv: 400, pv: 2400, amt: 2400 }];
 const ReactGridLayout = (props) => {
 	const [layouts, setLayouts] = useState(getFromLS(props.id) || "");
 	const [availableWidgets, setAvailableWidgets] = useState([
-		{ title: "Gym Time", money: 14, h: 2 },
+		{ title: "Gym Time", money: 14, h: 4 },
 		{ title: "Bar Time", money: "14", h: 2 },
 		{ title: "Study Time", money: "14", h: 2 },
 		{ title: "Bar expenses", money: "14", h: 2 },
@@ -74,7 +74,7 @@ const ReactGridLayout = (props) => {
 	return (
 		<div className="pad">
 			<Popup
-				contentStyle={{ borderRadius: 20, width: 600 }}
+				contentStyle={{ borderRadius: 20, width: 600, alignSelf: "flex-end" }}
 				trigger={
 					<button className="buttonAdd">
 						<AddRoundedIcon />
