@@ -20,11 +20,11 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err){
   console.log("Connected!");  
-  var sql = "CREATE TABLE money (name VARCHAR(255))";
+  /*var sql = "CREATE TABLE money (name VARCHAR(255))";
   connection.query(sql, function (err, result) {
       if (err) throw err;
   });
-  console.log("table created!");  
+  console.log("table created!");  */
 
   var sql = "INSERT INTO money (name) VALUES ('hola')";
   connection.query(sql, function (err, result) {
@@ -33,6 +33,28 @@ connection.connect(function(err){
   console.log("value created!");  
 
 });
+
+function dbQuery(databaseQuery) {
+  return new Promise(data => {
+      connection.query(databaseQuery, function (error, result) { 
+          if (error) {
+              console.log(error);
+              throw error;
+          }
+          try {
+              console.log(result);
+
+              data(result);
+
+          } catch (error) {
+              data({});
+              throw error;
+          }
+
+      });
+  });
+
+}
 function get_info(callback){
       
   var sql = "SELECT * FROM money";
@@ -41,21 +63,21 @@ function get_info(callback){
         if (err){ 
           throw err;
         }
-        console.log(results[0].objid);
-        stuff_i_want = results[0].objid;  
-        return callback(results[0].objid);  
+        console.log(results);
+        stuff = results;  
+        return callback(results);  
   })
 }
 
+var stuff = '';
+
 
 app.get('/', async function(req, res){
-  var results = '';
 
-  get_info(function(result){
-    results = result
-  })
+  result = await dbQuery("SELECT * FROM money");
+  var res_string = JSON.stringify(result);
 
-  res.end(results)
+  res.end(res_string)
 });  
 
 app.listen(port, () => {
