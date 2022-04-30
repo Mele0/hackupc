@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Money from "./screens/Money";
 import Time from "./screens/Time";
 import Dashboard from "./screens/Dashboard";
-import Header from "./header";
+import Header from "./Header";
 
 function App() {
 	return (
