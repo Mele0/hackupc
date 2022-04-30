@@ -7,14 +7,15 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import MailIcon from "@material-ui/icons/Mail";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import DevicesIcon from "@material-ui/icons/Devices";
 import EventIcon from "@material-ui/icons/Event";
 import ExploreIcon from "@material-ui/icons/Explore";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import SettingsIcon from "@material-ui/icons/Settings";
+import PaidIcon from "@mui/icons-material/Paid";
+import TimerIcon from "@mui/icons-material/Timer";
+import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Time from "./screens/Time";
 
 const drawerWidth = 240;
 
@@ -39,71 +40,75 @@ export default function ({ open, handleDrawerClose }) {
 	const classes = useStyles();
 
 	return (
-		<Drawer
-			className={classes.drawer}
-			variant="persistent"
-			anchor="left"
-			open={open}
-			classes={{
-				paper: classes.drawerPaper,
-			}}
-		>
-			<div className={classes.drawerHeader}>
-				<IconButton onClick={handleDrawerClose}>
-					<ChevronLeftIcon />
-				</IconButton>
-			</div>
-			<Divider />
-			<div className="">
-				<List>
-					<ListItem button>
-						<ListItemIcon>
-							<DashboardIcon />
-						</ListItemIcon>
-						<ListItemText primary="Dashboard" />
-					</ListItem>
-					<ListItem button>
-						<ListItemIcon>
-							<MailIcon />
-						</ListItemIcon>
-						<ListItemText primary="Mail" />
-					</ListItem>
-
-					<ListItem button>
-						<ListItemIcon>
-							<EventIcon />
-						</ListItemIcon>
-						<ListItemText primary="Events" />
-					</ListItem>
-					<ListItem button>
-						<ListItemIcon>
-							<ExploreIcon />
-						</ListItemIcon>
-						<ListItemText primary="Explore" />
-					</ListItem>
-					<ListItem button>
-						<ListItemIcon>
-							<FavoriteIcon />
-						</ListItemIcon>
-						<ListItemText primary="Favorites" />
-					</ListItem>
-				</List>
+		<Router>
+			<Drawer
+				className={classes.drawer}
+				variant="persistent"
+				anchor="left"
+				open={open}
+				classes={{
+					paper: classes.drawerPaper,
+				}}
+			>
+				<div className={classes.drawerHeader}>
+					<IconButton onClick={handleDrawerClose}>
+						<ChevronLeftIcon />
+					</IconButton>
+				</div>
 				<Divider />
-				<List>
-					<ListItem button>
-						<ListItemIcon>
-							<DevicesIcon />
-						</ListItemIcon>
-						<ListItemText primary="Devices" />
-					</ListItem>
-					<ListItem button>
-						<ListItemIcon>
-							<SettingsIcon />
-						</ListItemIcon>
-						<ListItemText primary="Settings" />
-					</ListItem>
-				</List>
-			</div>
-		</Drawer>
+				<div className="">
+					<List>
+						<ListItem button>
+							<ListItemIcon>
+								<DashboardIcon />
+							</ListItemIcon>
+							<Link to="/">
+								<ListItemText primary="Dashboard" font-family="Sunny" />
+							</Link>
+						</ListItem>
+						<ListItem button>
+							<ListItemIcon>
+								<TimerIcon />
+							</ListItemIcon>
+							<Link to="/time">
+								<ListItemText primary="Time" font-family="Sunny" />
+							</Link>
+						</ListItem>
+
+						<ListItem button>
+							<ListItemIcon>
+								<EventIcon />
+							</ListItemIcon>
+							<ListItemText primary="Events" />
+						</ListItem>
+						<ListItem button>
+							<ListItemIcon>
+								<PaidIcon />
+							</ListItemIcon>
+							<ListItemText primary="Money" />
+						</ListItem>
+						<ListItem button>
+							<ListItemIcon>
+								<ExploreIcon />
+							</ListItemIcon>
+							<ListItemText primary="Explore" />
+						</ListItem>
+					</List>
+					<Divider />
+
+					<List>
+						<ListItem button>
+							<ListItemIcon>
+								<CancelRoundedIcon style={{ transform: "rotate(45deg)" }} />
+							</ListItemIcon>
+							<ListItemText primary="a" />
+						</ListItem>
+					</List>
+				</div>
+			</Drawer>
+			<Routes>
+				<Route exact path="/time" element={<Time />}></Route>
+			</Routes>
+		</Router>
 	);
 }

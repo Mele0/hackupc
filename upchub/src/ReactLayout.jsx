@@ -49,13 +49,17 @@ const ReactGridLayout = () => {
 	};
 
 	const handleDelete = (widgetToBeDeleted) => {
+		console.log(widgetToBeDeleted);
 		const tempArray = usedWidgets.slice();
 		const index = tempArray.indexOf(
 			tempArray.find((widget) => widget.title === widgetToBeDeleted.title)
 		);
 		tempArray.splice(index, 1);
 		setUsedWidgets(tempArray);
-		setAvailableWidgets([...availableWidgets, { widgetToBeDeleted }]);
+		setAvailableWidgets([
+			...availableWidgets,
+			{ title: widgetToBeDeleted.title, h: 2 },
+		]);
 	};
 
 	return (

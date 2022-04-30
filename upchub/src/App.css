@@ -29,6 +29,7 @@
 }
 .buttonAdd {
 	font-size: 14px;
+	font-weight: bold;
 	padding: 10px;
 	border-color: "#fff";
 	border-radius: 25px;
