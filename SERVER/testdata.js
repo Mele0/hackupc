@@ -10,7 +10,7 @@ connection.connect(function(err){
 
     
         console.log("Test data connected!");  
-    
+        
         var sqlmoney = "CREATE TABLE money (id VARCHAR(255), balance FLOAT(10))";
         connection.query(sqlmoney, function (err, result) {
             if (err) throw err;
@@ -19,18 +19,31 @@ connection.connect(function(err){
         connection.query(sqlexpenses, function (err, result) {
             if (err) throw err;
         });
+        
+      
         var sqlgym = "CREATE TABLE gym (id VARCHAR(255), entrance TIME, end TIME, day DATE)";
         connection.query(sqlgym, function (err, result) {
             if (err) throw err;
         });
+        
         var sqlgym_hours = "CREATE TABLE gym_hours (id VARCHAR(255), hours FLOAT(24))";
         connection.query(sqlgym_hours, function (err, result) {
             if (err) throw err;
         });
+        
+        var sqlbib = "CREATE TABLE biblio (id VARCHAR(255), entrance TIME, end TIME, day DATE)";
+        connection.query(sqlbib, function (err, result) {
+            if (err) throw err;
+        });
+        
+        var sqlbib_hours = "CREATE TABLE biblio_hours (id VARCHAR(255), hours FLOAT(24))";
+        connection.query(sqlbib_hours, function (err, result) {
+            if (err) throw err;
+        });
     
-        console.log("tables created!");
+        console.log("Tables created!");
 
-
+        
         var sqlmoney = "INSERT INTO money (id, balance) VALUES ('49271168Q',3890),('49272268Q',590),('49273368Q',2076),('49274468Q',789)";
         connection.query(sqlmoney, function (err, result) {
             if (err) throw err;
@@ -47,10 +60,19 @@ connection.connect(function(err){
         connection.query(sqlgym_hours, function (err, result) {
             if (err) throw err;
         });
-        console.log("values created!")
+        var sqlbib = "INSERT INTO gym (id,entrance,end,day) VALUES ('49271168Q','18:00:00','20:00:00','2022-04-01'),('49271168Q','14:32:00','17:00:00','2022-04-04'),('49271168Q','15:32:00','20:10:00','2022-04-01'),('49271168Q','15:17:00','19:09:00','2022-04-14')";
+        connection.query(sqlbib, function (err, result) {
+            if (err) throw err;
+        });
+        var sqlbib_hours = "INSERT INTO gym_hours (id,hours) VALUES ('49271168Q',40),('49272268Q',12),('49273368Q',16),('49274468Q',12)";
+        connection.query(sqlbib_hours, function (err, result) {
+            if (err) throw err;
+        });
+        console.log("Values created!")
+        
 }
 else{
-     console.log('TD is already connected')
+     console.log('DB already exists')
 }
 });
 }
