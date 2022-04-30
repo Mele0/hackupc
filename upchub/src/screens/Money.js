@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import "../App.css";
 import ReactGridLayout from "../ReactLayout";
 
-export class Time extends Component {
+export class Money extends Component {
 	render() {
 		return (
 			<div>
-				<ReactGridLayout key={2} id={2} />
+				<ReactGridLayout key={3} id={3} />
 			</div>
 		);
 	}
 }
 
-export default Time;
+export default Money;

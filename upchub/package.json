@@ -12,10 +12,13 @@
 		"@testing-library/user-event": "^13.5.0",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
+		"react-icons": "^4.3.1",
+		"react-pro-sidebar": "^0.7.1",
 		"react-router-dom": "^6.3.0",
 		"react-scripts": "5.0.1",
 		"react-sizeme": "^3.0.2",
 		"reactjs-popup": "^2.0.5",
+		"recharts": "^2.1.9",
 		"web-vitals": "^2.1.4"
 	},
 	"scripts": {

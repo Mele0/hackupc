@@ -8,19 +8,20 @@ import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import "reactjs-popup/dist/index.css";
 import "./App.css";
-
+import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
-
-const ReactGridLayout = () => {
-	const [layouts, setLayouts] = useState(null);
+const data = [{ name: "Page A", uv: 400, pv: 2400, amt: 2400 }];
+const ReactGridLayout = (props) => {
+	const [layouts, setLayouts] = useState(getFromLS(props.id) || "");
 	const [availableWidgets, setAvailableWidgets] = useState([
-		{ title: "Gym Time", h: 2 },
-		{ title: "Bar Time", h: 2 },
-		{ title: "Study Time", h: 2 },
-		{ title: "Bar expenses", h: 2 },
-		{ title: "money2", h: 2 },
-		{ title: "money3", h: 2 },
+		{ title: "Gym Time", money: 14, h: 4 },
+		{ title: "Bar Time", money: "14", h: 2 },
+		{ title: "Study Time", money: "14", h: 2 },
+		{ title: "Bar expenses", money: "14", h: 2 },
+		{ title: "money2", money: "14", h: 2 },
+		{ title: "money3", money: "14", h: 2 },
 	]);
+	debugger;
 	const [usedWidgets, setUsedWidgets] = useState([]);
 
 	const handleModify = (layouts, layout) => {
@@ -33,6 +34,7 @@ const ReactGridLayout = () => {
 			tempArray[Number(position.i)].height = position.h;
 		});
 		setUsedWidgets(tempArray);
+		saveToLS(props.id, layout);
 	};
 
 	const handleAdd = (widgetToBeAdded) => {
@@ -44,7 +46,14 @@ const ReactGridLayout = () => {
 		setAvailableWidgets(tempArray);
 		setUsedWidgets([
 			...usedWidgets,
-			{ title: widgetToBeAdded.title, x: 0, y: 0, w: 2, h: 2 },
+			{
+				title: widgetToBeAdded.title,
+				money: widgetToBeAdded.money,
+				x: 0,
+				y: 0,
+				w: 2,
+				h: 2,
+			},
 		]);
 	};
 
@@ -58,14 +67,14 @@ const ReactGridLayout = () => {
 		setUsedWidgets(tempArray);
 		setAvailableWidgets([
 			...availableWidgets,
-			{ title: widgetToBeDeleted.title, h: 2 },
+			{ title: widgetToBeDeleted.title, money: widgetToBeDeleted.money, h: 2 },
 		]);
 	};
 
 	return (
-		<div>
+		<div className="pad">
 			<Popup
-				contentStyle={{ borderRadius: 20, width: 600 }}
+				contentStyle={{ borderRadius: 20, width: 600, alignSelf: "flex-end" }}
 				trigger={
 					<button className="buttonAdd">
 						<AddRoundedIcon />
@@ -114,7 +123,6 @@ const ReactGridLayout = () => {
 							<button
 								className="button"
 								onClick={() => {
-									console.log("modal closed ");
 									close();
 								}}
 							>
@@ -156,7 +164,7 @@ const ReactGridLayout = () => {
 								minH: 1,
 								maxH: Infinity,
 								isDraggable: true,
-								isResizable: true,
+								isResizable: false,
 							}}
 						>
 							<button
@@ -165,7 +173,14 @@ const ReactGridLayout = () => {
 							>
 								x
 							</button>
-							<div>{widget.title}</div>
+							<LineChart width={350} height={300} data={data}>
+								<XAxis dataKey="name" />
+								<YAxis />
+								<CartesianGrid stroke="#eee" strokeDasharray="5 5" />
+								<Line type="monotone" dataKey="uv" stroke="#8884d8" />
+								<Line type="monotone" dataKey="pv" stroke="#82ca9d" />
+							</LineChart>
+							<div className="title">{widget.title}</div>
 						</div>
 					);
 				})}
@@ -173,5 +188,17 @@ const ReactGridLayout = () => {
 		</div>
 	);
 };
+
+function getFromLS(key) {
+	try {
+		return JSON.parse(localStorage.getItem("rgl-8-" + key)) || {};
+	} catch (e) {
+		return undefined;
+	}
+}
+
+function saveToLS(key, value) {
+	localStorage.setItem("rgl-8-" + key, JSON.stringify(value));
+}
 
 export default ReactGridLayout;
