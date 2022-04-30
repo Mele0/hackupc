@@ -30,11 +30,11 @@ connection.connect(function(err){
   connection.query(sqlexpenses, function (err, result) {
       if (err) throw err;
   });*/
-  var sqlgym = "CREATE TABLE gym (id VARCHAR(255), entrance DATETIME(10), exit DATETIME(2))";
+  var sqlgym = "CREATE TABLE gym (id VARCHAR(255), entrance TIMESTAMP(10), exit TIMESTAMP(2), day DATE)";
   connection.query(sqlgym, function (err, result) {
       if (err) throw err;
   });
-  var sqlgym_hours = "CREATE TABLE gym_hours (id VARCHAR(255), FLOAT(24))";
+  var sqlgym_hours = "CREATE TABLE gym_hours (id VARCHAR(255), hours FLOAT(24))";
   connection.query(sqlgym_hours, function (err, result) {
       if (err) throw err;
   });
