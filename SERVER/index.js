@@ -30,14 +30,14 @@ connection.connect(function(err){
   connection.query(sqlexpenses, function (err, result) {
       if (err) throw err;
   });*/
-  var sqlgym = "CREATE TABLE gym (id VARCHAR(255), entrance TIMESTAMP(10), exit TIMESTAMP(2), day DATE)";
+  /*var sqlgym = "CREATE TABLE gym (id VARCHAR(255), entrance TIME(2), exit TIME(2), day DATE)";
   connection.query(sqlgym, function (err, result) {
       if (err) throw err;
-  });
-  var sqlgym_hours = "CREATE TABLE gym_hours (id VARCHAR(255), hours FLOAT(24))";
+  });*/
+  /*var sqlgym_hours = "CREATE TABLE gym_hours (id VARCHAR(255), hours FLOAT(24))";
   connection.query(sqlgym_hours, function (err, result) {
       if (err) throw err;
-  });
+  });*/
 
   console.log("table created!");
   var sqlmoney = "INSERT INTO money (id, balance) VALUES ('49271168Q',3890)";
@@ -46,6 +46,7 @@ connection.connect(function(err){
   });
 
   var sqlexpenses = "INSERT INTO expenses (id, input, time) VALUES ('49271168Q',-1000, '2018-09-08 17:51:04.777')";
+  var sqlexpenses = "INSERT INTO expenses (id, input, time) VALUES ('49272268Q',-1000, '2018-09-08 17:51:04.777')";
   connection.query(sqlexpenses, function (err, result) {
       if (err) throw err;
   });
