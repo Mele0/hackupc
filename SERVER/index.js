@@ -58,13 +58,6 @@ connection.connect(function(err){
   });
 
   var sqlexpenses = "INSERT INTO expenses (id, input, time) VALUES ('49271168Q',-1000, '2018-09-08 17:51:04.777')";
-  var sql = "CREATE TABLE money (name VARCHAR(255), value FLOAT(52))";
-  connection.query(sql, function (err, result) {
-      if (err) throw err;
-  });
-  console.log("table created!"); 
-
-
   connection.query(sqlexpenses, function (err, result) {
       if (err) throw err;
   });
