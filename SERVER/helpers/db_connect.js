@@ -11,6 +11,7 @@ function db_connection(){
         password : password,
         database : "mydb"
     });
+    return connection
 }
 
 
