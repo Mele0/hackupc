@@ -32,11 +32,6 @@ connection.connect(function(err){
       if (err) throw err;
   });*/
 
-  var sqlexpenses = "CREATE TABLE expenses (id VARCHAR(255), input FLOAT(10), time DATETIME(2))";
-  connection.query(sqlexpenses, function (err, result) {
-      if (err) throw err;
-  });
-
   console.log("table created!");
   var sqlmoney = "INSERT INTO money (id, balance) VALUES ('49271168Q',3890)";
   connection.query(sqlmoney, function (err, result) {

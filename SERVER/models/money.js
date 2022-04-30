@@ -4,11 +4,11 @@ const money_result = require('../helpers/db_connect')
 
 
 async function get_money_by_id(user){
-    con = db_connection()    
+    con = money_result.db_connection()    
     var  sql = "SELECT * FROM money WHERE id = " + mysql.escape(user)
-    result = await db_query(sql, con)
+    result = await money_result.db_query(sql, con)
     return result
 
 }
 
-module.exports = get_money_by_id;
+module.exports = {get_money_by_id};

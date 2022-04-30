@@ -36,4 +36,4 @@ function db_query(databaseQuery, connection) {
   
 }
 
-module.exports = db_connection;
+module.exports = {db_connection,db_query};
