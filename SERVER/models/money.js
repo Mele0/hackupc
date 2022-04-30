@@ -22,8 +22,11 @@ async function get_expenses_by_id(user){
 
 async function change_balance(user, input){
     con = money_result.db_connection()  
-    balance = get_money_by_id(user).balance+input
-    var sql = "UPDATE money SET balance = " + mysql.escape(balance) + " WHERE) id = " + mysql.escape(user)
+    previous_balance = await get_money_by_id(user)
+    var res_string = previous_balance[0].balance;
+    previous_balance = parseFloat(res_string)
+    balance = previous_balance + input
+    var sql = "UPDATE money SET balance = " + mysql.escape(balance) + " WHERE id = " + mysql.escape(user)
     result = await money_result.db_query(sql, con)
     return result
 }
