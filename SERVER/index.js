@@ -21,6 +21,7 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err){
   console.log("Connected!");  
+<<<<<<< HEAD
   /*var sqlmoney = "CREATE TABLE money (id VARCHAR(255), balance FLOAT(10))";
   connection.query(sqlmoney, function (err, result) {
       if (err) throw err;
@@ -38,6 +39,13 @@ connection.connect(function(err){
   });
 
   var sqlexpenses = "INSERT INTO expenses (id, input, time) VALUES ('49271168Q',-1000, '2018-09-08 17:51:04.777')";
+=======
+  var sql = "CREATE TABLE money (name VARCHAR(255), value FLOAT(52))";
+  connection.query(sql, function (err, result) {
+      if (err) throw err;
+  });
+  console.log("table created!"); 
+>>>>>>> f1ca4184753cf5eea8fd6d8663de709cd49d0585
 
   connection.query(sqlexpenses, function (err, result) {
       if (err) throw err;
@@ -88,8 +96,13 @@ var stuff = '';
 
 app.get('/', async function(req, res){
 
+<<<<<<< HEAD
   result = await dbQuery("SELECT * FROM expenses");
   var res_string = JSON.stringify(result);
+=======
+  // result = await dbQuery("SELECT * FROM money");
+  // var res_string = JSON.stringify(result);
+>>>>>>> f1ca4184753cf5eea8fd6d8663de709cd49d0585
 
   // res.end(res_string)
 
