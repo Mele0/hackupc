@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 require('dotenv').config();
+const money = require('./routes/money.js');
 const port = process.env.PORT
 const host = process.env.HOST
 const user = process.env.USER
@@ -90,8 +91,12 @@ app.get('/', async function(req, res){
   result = await dbQuery("SELECT * FROM expenses");
   var res_string = JSON.stringify(result);
 
-  res.end(res_string)
-});  
+  // res.end(res_string)
+
+
+});
+
+app.use('/money', money)
 
 app.listen(port, () => {
 
