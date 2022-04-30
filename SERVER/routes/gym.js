@@ -12,8 +12,10 @@ router.get('/', async function(req, res){
    res.end(res_string)
 
 });
-router.post('/', function(req, res){
-   res.send('POST route on things.');
+router.post('/', async function(req, res){
+   let user = req.body.user
+   result = await gym_result.update_hours(user)
+   res.end(result)
 });
 
 //export this router to use in our index.js
