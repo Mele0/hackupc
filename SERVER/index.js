@@ -30,6 +30,14 @@ connection.connect(function(err){
   connection.query(sqlexpenses, function (err, result) {
       if (err) throw err;
   });*/
+  var sqlgym = "CREATE TABLE gym (id VARCHAR(255), entrance DATETIME(10), exit DATETIME(2))";
+  connection.query(sqlgym, function (err, result) {
+      if (err) throw err;
+  });
+  var sqlgym_hours = "CREATE TABLE gym_hours (id VARCHAR(255), FLOAT(24))";
+  connection.query(sqlgym_hours, function (err, result) {
+      if (err) throw err;
+  });
 
   console.log("table created!");
   var sqlmoney = "INSERT INTO money (id, balance) VALUES ('49271168Q',3890)";
