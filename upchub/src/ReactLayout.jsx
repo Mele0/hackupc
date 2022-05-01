@@ -3,6 +3,10 @@ import { Responsive, WidthProvider } from "react-grid-layout";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import Popup from "reactjs-popup";
 import Grid from "@mui/material/Grid";
+import CancelIcon from '@mui/icons-material/Cancel';
+import { FaRegCopyright } from "react-icons/fa";
+import { TiWeatherPartlySunny } from "react-icons/ti";
+
 import axios from "axios";
 
 import "react-grid-layout/css/styles.css";
@@ -16,6 +20,12 @@ import {
 	XAxis,
 	YAxis,
 	ResponsiveContainer,
+	BarChart,
+	Tooltip,
+	Legend,
+	Bar,
+	AreaChart,
+	Area
 } from "recharts";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const ReactGridLayout = (props) => {
@@ -23,6 +33,9 @@ const ReactGridLayout = (props) => {
 	const [money_text, set_money_text] = useState(null);
 	const [expense_data, set_expense_data] = useState(null);
 	const [loading_data, set_loading_data] = useState(true);
+	const [gym_time, set_gym_time] = useState(null);
+    const [study_time, set_study_time] = useState(null);
+    const [study_time_d, set_study_time_d] = useState(null);
 
 	useEffect(() => {
 		if (loading_data) {
@@ -55,6 +68,42 @@ const ReactGridLayout = (props) => {
 				.catch(function (err) {
 					console.log(err);
 				});
+				axios
+                .get("/gym?user=49271168Q")
+                .then((response) => {
+                    var value = response.data;
+                    var text = value[0].hours;
+                    set_gym_time(text);
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+            axios
+                .get("/biblio?user=49271168Q")
+                .then((response) => {
+                    var value = response.data;
+                    var text = value[0].hours;
+                    set_study_time(text);
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+            axios
+                .get("/studytime?user=49271168Q")
+                .then((response) => {
+                    var value = response.data;
+                    value.map((item) => {
+                        delete item.id;
+                        item.name = item.day;
+                        delete item.day;
+                        item.uv = item.hours;
+                        delete item.hours;
+                    });
+                    set_study_time_d(value);
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
 			set_loading_data(false);
 		}
 	});
@@ -63,8 +112,10 @@ const ReactGridLayout = (props) => {
 		{ title: "Bar Time", money: "14", h: 2 },
 		{ title: "Study Time", money: "14", h: 2 },
 		{ title: "Bar expenses", money: "14", h: 2 },
-		{ title: "money2", money: "14", h: 2 },
-		{ title: "money3", money: "14", h: 2 },
+		{ title: "Monthly Expenses", money: "14", h: 2 },
+		{ title: "Weather", money: "14", h: 2 },
+		{ title: "Summary", money: "14", h: 2 },
+        { title: "Study time per day", money: "14", h: 2 },
 	]);
 	const [usedWidgets, setUsedWidgets] = useState([]);
 
@@ -93,7 +144,7 @@ const ReactGridLayout = (props) => {
 			{
 				title: widgetToBeAdded.title,
 				money: widgetToBeAdded.money,
-				x: 0,
+				x: 1,
 				y: 0,
 				w: 2,
 				h: 2,
@@ -114,15 +165,39 @@ const ReactGridLayout = (props) => {
 			{ title: widgetToBeDeleted.title, money: widgetToBeDeleted.money, h: 2 },
 		]);
 	};
-
+	const divStyle = {
+		marginTop : 50,
+		position : "absolute",
+		bottom: 50,
+		right: 50,
+		borderRadius:80,
+		fontWeight: 50,
+		boxShadow: 'none',
+		borderRadius:50,
+		boxShadow: '2px 2px 2px #0a96e4',
+	}
+	const titulo_we = {
+		marginTop: 30,
+	}
+	const weatherT = {
+		height: 120,
+		width: 120,
+		position : "center",
+		alignSelf: "center",
+	}
+	const estilo_txt = {
+		fontSize: 40,
+		fontWeight: 'bold',
+		fontFamily: 'Arial',
+	}
 	return (
 		<div className="pad">
 			<Popup
-				contentStyle={{ borderRadius: 20, width: 600, alignSelf: "flex-end" }}
+				contentStyle={{ borderRadius: 20, width: 650, height: 380,alignSelf: "flex-end" }}
 				trigger={
-					<button className="buttonAdd">
+					<button className="buttonAdd" style = {divStyle}>
 						<AddRoundedIcon />
-						<div className="buttonAdd"> Add Widget </div>
+						<div className="buttonAdd"> Widget </div>
 					</button>
 				}
 				modal
@@ -152,25 +227,14 @@ const ReactGridLayout = (props) => {
 							</Grid>
 						</div>
 						<div className="actions">
-							<Popup
-								trigger={<button className="button"> Add Widget </button>}
-								position="top center"
-								nested
-							>
-								<span>
-									Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-									Beatae magni omnis delectus nemo, maxime molestiae dolorem
-									numquam mollitia, voluptate ea, accusamus excepturi deleniti
-									ratione sapiente! Laudantium, aperiam doloribus. Odit, aut.
-								</span>
-							</Popup>
+						
 							<button
 								className="button"
 								onClick={() => {
 									close();
 								}}
 							>
-								Cancel
+								Ok
 							</button>
 						</div>
 					</div>
@@ -208,7 +272,7 @@ const ReactGridLayout = (props) => {
 								minH: 1,
 								maxH: Infinity,
 								isDraggable: true,
-								isResizable: true,
+								isResizable: widget.title === 'Weather'?false:true,
 							}}
 						>
 							<button
@@ -217,18 +281,67 @@ const ReactGridLayout = (props) => {
 							>
 								x
 							</button>
-							<ResponsiveContainer width="90%" height="80%">
-								<LineChart
-									data={expense_data}
-									margin={{ top: 20, right: 30, left: 20, bottom: 0 }}
-								>
-									<Line type="monotone" dataKey="uv" stroke="#8884d8" />
-									<CartesianGrid stroke="#ccc" />
-									<XAxis dataKey="name" />
-									<YAxis />
-								</LineChart>
-							</ResponsiveContainer>
-							<div className="title">{widget.title}</div>
+							{widget.title == "Bar expenses" && 
+								<ResponsiveContainer width="90%" height="80%">
+									<AreaChart  data={expense_data}
+										margin={{ top: 30, right: 30, left: 0, bottom: 0 }}>
+										<defs>
+											<linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+											<stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
+											<stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+											</linearGradient>
+											<linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+											<stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
+											<stop offset="95%" stopColor="#82ca9d" stopOpacity={0}/>
+											</linearGradient>
+										</defs>
+										<XAxis dataKey="name" />
+										<YAxis />
+										<CartesianGrid strokeDasharray="3 3" />
+										<Tooltip />
+										<Area type="monotone" dataKey="uv" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+										<Area type="monotone" dataKey="pv" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" />
+									</AreaChart>
+								</ResponsiveContainer>
+							}
+							{widget.title == "Study time per day" && 
+								<ResponsiveContainer width="90%" height="80%">
+									<BarChart data={study_time_d}
+										margin={{ top: 20, right: 30, left: 20, bottom: 0 }}>
+										<CartesianGrid strokeDasharray="3 3" />
+										<XAxis dataKey="name" />
+										<YAxis />
+										<Tooltip />
+										<Legend />
+										<Bar dataKey="pv" fill="#8884d8" />
+										<Bar dataKey="uv" fill="#82ca9d" />
+									</BarChart>
+								</ResponsiveContainer>
+							}
+							{widget.title == "Summary" && 
+								<div className="summary">
+									<table>
+									<tr>
+										<th>Balance</th>
+										<th>Gym hours</th>
+										<th>Study hour</th>
+									</tr>
+										<tr>
+											<td>{money_text}</td>
+											<td>{gym_time}</td>
+											<td>{study_time}</td>
+										</tr>
+										
+									
+									</table>
+							  	</div>
+							}
+
+
+							<div className="title" style={titulo_we}>{widget.title}</div>
+							{widget.title === 'Weather' && 	
+							<><TiWeatherPartlySunny style={weatherT}></TiWeatherPartlySunny><div style={estilo_txt}>23ºC</div></>
+							}
 						</div>
 					);
 				})}

@@ -17,7 +17,7 @@ async function update_hours(user, date){
     con = db_connect.db_connection()
     previous_hours = await get_hours_by_id(user)
     console.log(previous_hours)
-    var  sql = "SELECT entrance, end FROM gym WHERE id = " + mysql.escape(user) + "AND day = " + mysql.escape('2022-04-01')
+    var  sql = "SELECT entrance, end FROM gym WHERE id = " + mysql.escape(user) + "AND day = " + mysql.escape(date)
     var adding_hours = await db_connect.db_query(sql, con)
     console.log(adding_hours)
     sql = "SELECT SUBTIME("+ mysql.escape(adding_hours[0].end) +", "+ mysql.escape(adding_hours[0].entrance) + ") AS result"
