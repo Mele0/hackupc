@@ -22,6 +22,9 @@ const ReactGridLayout = (props) => {
 	const [layouts, setLayouts] = useState(getFromLS(props.id) || "");
 	const [money_text, set_money_text] = useState(null);
 	const [expense_data, set_expense_data] = useState(null);
+	const [gym_time, set_gym_time] = useState(null);
+	const [study_time, set_study_time] = useState(null);
+	const [study_time_d, set_study_time_d] = useState(null);
 	const [loading_data, set_loading_data] = useState(true);
 
 	useEffect(() => {
@@ -55,6 +58,42 @@ const ReactGridLayout = (props) => {
 				.catch(function (err) {
 					console.log(err);
 				});
+			axios
+				.get("/gym?user=49271168Q")
+				.then((response) => {
+					var value = response.data;
+					var text = value[0].hours;
+					set_gym_time(text);
+				})
+				.catch(function (err) {
+					console.log(err);
+				});
+			axios
+				.get("/biblio?user=49271168Q")
+				.then((response) => {
+					var value = response.data;
+					var text = value[0].hours;
+					set_study_time(text);
+				})
+				.catch(function (err) {
+					console.log(err);
+				});
+			axios
+				.get("/studytime?user=49271168Q")
+				.then((response) => {
+					var value = response.data;
+					value.map((item) => {
+						delete item.id;
+						item.name = item.day;
+						delete item.day;
+						item.uv = item.hours;
+						delete item.hours;
+					});
+					set_study_time_d(value);
+				})
+				.catch(function (err) {
+					console.log(err);
+				});
 			set_loading_data(false);
 		}
 	});
@@ -65,6 +104,8 @@ const ReactGridLayout = (props) => {
 		{ title: "Bar expenses", money: "14", h: 2 },
 		{ title: "money2", money: "14", h: 2 },
 		{ title: "money3", money: "14", h: 2 },
+		{ title: "Summary", money: "14", h: 2 },
+		{ title: "Study time per day", money: "14", h: 2 },
 	]);
 	const [usedWidgets, setUsedWidgets] = useState([]);
 
@@ -217,17 +258,51 @@ const ReactGridLayout = (props) => {
 							>
 								x
 							</button>
-							<ResponsiveContainer width="90%" height="80%">
-								<LineChart
-									data={expense_data}
-									margin={{ top: 20, right: 30, left: 20, bottom: 0 }}
-								>
-									<Line type="monotone" dataKey="uv" stroke="#8884d8" />
-									<CartesianGrid stroke="#ccc" />
-									<XAxis dataKey="name" />
-									<YAxis />
-								</LineChart>
-							</ResponsiveContainer>
+							{widget.title == "Bar expenses" && 
+								<ResponsiveContainer width="90%" height="80%">
+									<LineChart
+										data={expense_data}
+										margin={{ top: 20, right: 30, left: 20, bottom: 0 }}
+									>
+										<Line type="monotone" dataKey="uv" stroke="#8884d8" />
+										<CartesianGrid stroke="#ccc" />
+										<XAxis dataKey="name" />
+										<YAxis />
+									</LineChart>
+								</ResponsiveContainer>
+							}
+							{widget.title == "Study time per day" && 
+								<ResponsiveContainer width="90%" height="80%">
+									<LineChart
+										data={study_time_d}
+										margin={{ top: 20, right: 30, left: 20, bottom: 0 }}
+									>
+										<Line type="monotone" dataKey="uv" stroke="#8884d8" />
+										<CartesianGrid stroke="#ccc" />
+										<XAxis dataKey="name" />
+										<YAxis />
+									</LineChart>
+								</ResponsiveContainer>
+							}
+							{widget.title == "Summary" && 
+								<div className="summary">
+									<table>
+									<tr>
+										<th>Balance</th>
+										<th>Gym hours</th>
+										<th>Study hour</th>
+									</tr>
+										<tr>
+											<td>{money_text}</td>
+											<td>{gym_time}</td>
+											<td>{study_time}</td>
+										</tr>
+										
+									
+									</table>
+							  	</div>
+							}
+							
 							<div className="title">{widget.title}</div>
 						</div>
 					);
@@ -236,6 +311,7 @@ const ReactGridLayout = (props) => {
 		</div>
 	);
 };
+
 
 function getFromLS(key) {
 	try {
